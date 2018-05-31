@@ -1,22 +1,28 @@
 <template>
-	<div>
-		<p>{{ message }}</p>
-		<input v-model="message"/>
-	</div>
+	<ul class="movies">
+		<li v-for="movie of movies" class="movie">
+			{{ movie.title }}
+		</li>
+	</ul>
 </template>
 
 <script>
 export default {
 	data () {
 		return {
-			message: 'Hello world',
+			movies: [
+				{ title: 'Star Wars' },
+				{ title: 'Blade Runner'},
+			],
 		}
 	},
 }
 </script>
 
-<style>
-p {
-	color: grey;
+<style scoped>
+.movie:not(:last-child) {
+	padding-bottom: 6px;
+	margin-bottom: 6px;
+	border-bottom: solid 1px rgba(0, 0, 0, .1);
 }
 </style>
