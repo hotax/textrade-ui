@@ -10,6 +10,7 @@
                 <p v-html="question.content"></p>
             </article>
         </section>
+        <Loading v-if="loading" />
     </main>
 </template>
 
@@ -17,15 +18,33 @@
     export default {
         data() {
             return {
-                questions: [{
-                    title: 'title1',
-                    content: 'content of question 1'
-                }, {
-                    title: 'title2',
-                    content: 'content of question2'
-                }],
+                questions: [],
                 error: null,
+                loading: false,
             }
+        },
+        created() {
+            this.loading = true
+            fetch('http://localhost:3000/questions').then(response => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    return Promise.reject('error')
+                }
+            }).then(result => {
+                this.questions = result
+                this.loading = false
+            }).catch(e => {
+                this.questions = [{
+                        title: 'title1',
+                        content: 'content of question 1'
+                    }, {
+                        title: 'title2',
+                        content: 'content of question2'
+                    }]
+                    // this.error = e
+                this.loading = false
+            })
         },
     }
 </script>
