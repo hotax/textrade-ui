@@ -1,8 +1,10 @@
 import Vue from 'vue'
-import App from './App.vue'
+import AppLayout from './components/AppLayout.vue'
+import router from './router'
 
 Vue.config.productionTip = false
 
 new Vue({
-    ...App
+    ...AppLayout,
+    router
 }).$mount('#app')
