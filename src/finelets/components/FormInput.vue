@@ -1,8 +1,7 @@
 <template>
     <div class="row">
-        <input class="input" :class="inputClass" :name="name" :type="type"
-            :value.prop="value" :placeholder="placeholder" @input="update"
-        />
+        <input class="input" :class="inputClass" :name="name" :type="type" :value.prop="value"
+            :placeholder="placeholder" @input="update" />
     </div>
 </template>
 
