@@ -74,15 +74,19 @@
                         password: this.password,
                     }),
                 })
-                this.$router.push({
+                this.$router.replace(this.$route.params.wantedRoute || {
                     name: 'home'
                 })
+                /*  this.$router.push({
+                     name: 'home'
+                 }) */
             },
             async signup() {
                 // TODO
             },
         }
     }
+
 </script>
 
 <style lang="stylus" scoped>
@@ -91,4 +95,5 @@
             max-width: 400px;
         }
     }
+
 </style>

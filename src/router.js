@@ -41,7 +41,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.private && !state.user) {
         next({
-            name: 'login'
+            name: 'login',
+            params: {
+                wantedRoute: to.fullPath
+
+            }
         })
         return
     }
