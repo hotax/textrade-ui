@@ -4,6 +4,7 @@ Vue.use(VueRouter)
 
 import Home from './components/Home.vue'
 import FAQ from './components/FAQ.vue'
+import Login from './components/Login.vue'
 
 const routes = [{
         path: '/',
@@ -15,11 +16,16 @@ const routes = [{
         name: 'faq',
         component: FAQ
     },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login
+    }
 ]
 
 const router = new VueRouter({
     routes,
-    mode: 'history',
+    mode: 'history'
 })
 
 export default router

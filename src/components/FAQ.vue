@@ -5,7 +5,7 @@
             Can't load the questions
         </div>
         <section class="list">
-            <article v-for="question of questionList">
+            <article v-for="question of questionList" :key="question.title">
                 <h2 v-html="question.title"></h2>
                 <p v-html="question.content"></p>
             </article>
