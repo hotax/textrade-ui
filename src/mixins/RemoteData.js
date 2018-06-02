@@ -1,4 +1,4 @@
-export default function(resources) {
+export default function (resources) {
     return {
         data() {
             let initData = {
@@ -33,7 +33,6 @@ export default function(resources) {
                         this.$data.remoteDataLoading--
                     })
                     .catch(e => {
-                        console.error(e);
                         this.$data.remoteErrors[key] = e
                         this.$data.remoteDataLoading--
                     })

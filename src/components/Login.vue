@@ -40,7 +40,7 @@
     export default {
         data() {
             return {
-                mode: 'signup',
+                mode: 'login',
                 username: '',
                 password: '',
                 password2: '',
@@ -67,7 +67,16 @@
                 await this[this.mode]()
             },
             async login() {
-                // TODO
+                this.$state.user = await this.$fetch('login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: this.username,
+                        password: this.password,
+                    }),
+                })
+                this.$router.push({
+                    name: 'home'
+                })
             },
             async signup() {
                 // TODO
