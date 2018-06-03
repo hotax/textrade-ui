@@ -1,3 +1,5 @@
+const tickets = []
+
 function listQuestions () {
   return Promise.resolve([
     {
@@ -12,8 +14,11 @@ function listQuestions () {
 }
 
 function listTickets () {
-  return Promise.resolve([
-  ])
+  return Promise.resolve(tickets)
+}
+
+function createTicket(req){
+  tickets.push(JSON.parse(req.body))
 }
 
 function login (req) {
@@ -32,6 +37,7 @@ function logout () {
 const resourcesFetches = {
   'http://localhost:3000/questions': listQuestions,
   'http://localhost:3000/tickets': listTickets,
+  'http://localhost:3000/tickets/new': createTicket,
   'http://localhost:3000/login': login,
   'http://localhost:3000/logout': logout
 }
