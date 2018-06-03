@@ -77,9 +77,6 @@
                 this.$router.replace(this.$route.params.wantedRoute || {
                     name: 'home'
                 })
-                /*  this.$router.push({
-                     name: 'home'
-                 }) */
             },
             async signup() {
                 // TODO
