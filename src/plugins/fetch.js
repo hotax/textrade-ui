@@ -11,6 +11,11 @@ function listQuestions () {
   ])
 }
 
+function listTickets () {
+  return Promise.resolve([
+  ])
+}
+
 function login (req) {
   let body = JSON.parse(req.body)
   return Promise.resolve({
@@ -26,6 +31,7 @@ function logout () {
 
 const resourcesFetches = {
   'http://localhost:3000/questions': listQuestions,
+  'http://localhost:3000/tickets': listTickets,
   'http://localhost:3000/login': login,
   'http://localhost:3000/logout': logout
 }

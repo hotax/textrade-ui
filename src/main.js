@@ -8,6 +8,11 @@ import VueFetch from './plugins/fetch'
 import state from './state'
 import VueState from './plugins/state'
 
+import * as filters from './filters'
+for (const key in filters) {
+    Vue.filter(key, filters[key])
+}
+
 Vue.use(VueFetch, {
     baseUrl: 'http://localhost:3000/',
 })
