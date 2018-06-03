@@ -16,7 +16,14 @@
 </template>
 
 <script>
+    import PersistantData from '../mixins/PersistantData.js'
     export default {
+        mixins: [
+            PersistantData('NewTicket', [
+                'title',
+                'description',
+            ]),
+        ],
         data() {
             return {
                 title: '',

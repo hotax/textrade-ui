@@ -1,8 +1,7 @@
 const tickets = []
 
-function listQuestions () {
-  return Promise.resolve([
-    {
+function listQuestions() {
+  return Promise.resolve([{
       title: 'title1',
       content: 'content of question 1'
     },
@@ -13,22 +12,22 @@ function listQuestions () {
   ])
 }
 
-function listTickets () {
+function listTickets() {
   return Promise.resolve(tickets)
 }
 
-function createTicket(req){
+function createTicket(req) {
   tickets.push(JSON.parse(req.body))
 }
 
-function login (req) {
+function login(req) {
   let body = JSON.parse(req.body)
   return Promise.resolve({
     username: body.username
   })
 }
 
-function logout () {
+function logout() {
   return Promise.resolve({
     status: 'ok'
   })
@@ -44,22 +43,20 @@ const resourcesFetches = {
 
 let baseUrl
 
-function $fetch (url, options) {
-  const finalOptions = Object.assign(
-        {},
-    {
+function $fetch(url, options) {
+  const finalOptions = Object.assign({}, {
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: 'include'
     },
-        options
-    )
+    options
+  )
   return resourcesFetches[`${baseUrl}${url}`](finalOptions)
 }
 
 export default {
-  install (Vue, options) {
+  install(Vue, options) {
     baseUrl = options.baseUrl
     Vue.prototype.$fetch = $fetch
   }
