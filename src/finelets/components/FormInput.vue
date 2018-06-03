@@ -1,12 +1,17 @@
 <template>
     <div class="row">
         <component :is="element" class="input" :class="inputClass" :name="name" :type="type"
-            :value.prop="text" @input="update" :placeholder="placeholder" />
+            :value.prop="text" @input="update" :placeholder="placeholder" v-bind="$attrs"
+        />
     </div>
 </template>
 
 <script>
     export default {
+        model: {
+            prop: 'text',
+            event: 'update',
+        },
         props: {
             name: {
                 type: String,
@@ -15,7 +20,7 @@
                 type: String,
                 default: 'text',
             },
-            value: {
+            text: {
                 required: true,
             },
             placeholder: {
@@ -38,7 +43,7 @@
         },
         methods: {
             update(event) {
-                this.$emit('input', event.currentTarget.value)
+                this.$emit('update', event.currentTarget.value)
             },
         },
     }
