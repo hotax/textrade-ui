@@ -7,7 +7,9 @@
             <div>亿泰纺织品业务管理系统</div>
         </header>
         <NavMenu />
-        <router-view />
+        <transition name="fade" mode="out-in">
+            <router-view />
+        </transition>
     </div>
 </template>
 
@@ -18,10 +20,12 @@
             NavMenu,
         },
     }
+
 </script>
 
 <style lang="stylus">
     @import '../style/main';
+
 </style>
 
 <style lang="stylus" scoped>
@@ -31,4 +35,5 @@
             height: 64px;
         }
     }
+
 </style>
