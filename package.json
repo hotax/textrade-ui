@@ -10,6 +10,8 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "moment": "^2.22.2",
+    "route-parser": "0.0.5",
+    "underscore": "^1.9.1",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1"
   },

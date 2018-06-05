@@ -37,11 +37,12 @@
         },
         methods: {
             async operation() {
-                const result = await this.$fetch('tickets/new', {
+                await this.$fetch('tickets/new', {
                     method: 'POST',
                     body: JSON.stringify({
                         title: this.title,
                         description: this.description,
+                        user: this.$state.user
                     }),
                 })
                 this.title = this.description = ''

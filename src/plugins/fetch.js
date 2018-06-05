@@ -1,3 +1,7 @@
+import Route from 'route-parser'
+import _ from 'underscore'
+
+let __ticketId = 1
 const tickets = []
 
 function listQuestions() {
@@ -17,7 +21,20 @@ function listTickets() {
 }
 
 function createTicket(req) {
-  tickets.push(JSON.parse(req.body))
+  let data = JSON.parse(req.body)
+  data._id = (__ticketId++).toString()
+  data.status = 'new'
+  data.date = new Date()
+  tickets.push(data)
+}
+
+function getTicket({
+  id
+}) {
+  let obj = _.find(tickets, t => {
+    return t._id === id
+  })
+  return Promise.resolve(obj)
 }
 
 function login(req) {
@@ -34,17 +51,18 @@ function logout() {
 }
 
 const resourcesFetches = {
-  'http://localhost:3000/questions': listQuestions,
-  'http://localhost:3000/tickets': listTickets,
-  'http://localhost:3000/tickets/new': createTicket,
-  'http://localhost:3000/login': login,
-  'http://localhost:3000/logout': logout
+  'http://localhost/questions': listQuestions,
+  'http://localhost/tickets': listTickets,
+  'http://localhost/tickets/new': createTicket,
+  'http://localhost/ticket/:id': getTicket,
+  'http://localhost/login': login,
+  'http://localhost/logout': logout
 }
 
 let baseUrl
 
 function $fetch(url, options) {
-  const finalOptions = Object.assign({}, {
+  let finalOptions = Object.assign({}, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -52,7 +70,21 @@ function $fetch(url, options) {
     },
     options
   )
-  return resourcesFetches[`${baseUrl}${url}`](finalOptions)
+  let finalUrl = `${baseUrl}${url}`
+  let handler
+  Object.keys(resourcesFetches).forEach(key => {
+    let route = new Route(key);
+    let m = route.match(finalUrl)
+    if (m) {
+      if (!_.isEmpty(m)) {
+        handler = resourcesFetches[key]
+        finalOptions = m
+      } else {
+        handler = resourcesFetches[finalUrl]
+      }
+    }
+  })
+  return handler ? handler(finalOptions) : Promise.reject('Fetcher of url:[' + finalUrl + '] is not found!')
 }
 
 export default {

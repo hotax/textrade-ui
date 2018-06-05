@@ -14,7 +14,7 @@ for (const key in filters) {
 }
 
 Vue.use(VueFetch, {
-    baseUrl: 'http://localhost:3000/',
+    baseUrl: 'http://localhost/',
 })
 Vue.use(VueState, state)
 Vue.config.productionTip = false
