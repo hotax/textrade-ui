@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import state from './state'
+// import state from './state'
+import store from './store'
 
 import Home from './components/Home.vue'
 import FAQ from './components/FAQ.vue'
@@ -81,7 +82,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	if (to.matched.some(r => r.meta.private) && !state.user) {
+	const user = store.getters.user
+	if (to.matched.some(r => r.meta.private) && !user) {
 		next({
 			name: 'login',
 			params: {
@@ -90,7 +92,7 @@ router.beforeEach((to, from, next) => {
 		});
 		return;
 	}
-	if (to.matched.some(r => r.meta.guest) && state.user) {
+	if (to.matched.some(r => r.meta.guest) && user) {
 		next({
 			name: 'home'
 		});

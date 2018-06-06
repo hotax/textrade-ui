@@ -5,8 +5,8 @@
         <router-link :to="{ name: 'tickets' }"> Support tickets</router-link>
 
         <div class="spacer"></div>
-        <template v-if="$state.user">
-            <a>{{ $state.user.username }}</a>
+        <template v-if="$store.getters.user">
+            <a>{{ $store.getters.user.username }}</a>
             <a @click="logout">Logout</a>
         </template>
         <router-link v-else :to="{name: 'login'}">Login</router-link>
@@ -19,7 +19,7 @@
             async logout() {
                 const result = await this.$fetch('logout')
                 if (result.status === 'ok') {
-                    this.$state.user = null
+                    this.$store.commit('user', null)
                     this.$router.replace({
                         name: 'home'
                     })

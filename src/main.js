@@ -4,9 +4,9 @@ import router from './router'
 import './global-components'
 import VueFetch from './plugins/fetch'
 
-
-import state from './state'
-import VueState from './plugins/state'
+import store from './store'
+// import state from './state'
+// import VueState from './plugins/state'
 
 import * as filters from './filters'
 for (const key in filters) {
@@ -16,11 +16,12 @@ for (const key in filters) {
 Vue.use(VueFetch, {
     baseUrl: 'http://localhost/',
 })
-Vue.use(VueState, state)
+// Vue.use(VueState, state)
 Vue.config.productionTip = false
 
 new Vue({
-    data: state,
+    // data: state,
     ...AppLayout,
-    router
+    router,
+    store
 }).$mount('#app')

@@ -67,13 +67,14 @@
                 await this[this.mode]()
             },
             async login() {
-                this.$state.user = await this.$fetch('login', {
+                let user = await this.$fetch('login', {
                     method: 'POST',
                     body: JSON.stringify({
                         username: this.username,
                         password: this.password,
                     }),
                 })
+                this.$store.commit('user', user)
                 this.$router.replace(this.$route.params.wantedRoute || {
                     name: 'home'
                 })

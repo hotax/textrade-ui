@@ -42,7 +42,7 @@
                     body: JSON.stringify({
                         title: this.title,
                         description: this.description,
-                        user: this.$state.user
+                        user: this.$store.getters.user
                     }),
                 })
                 this.title = this.description = ''
