@@ -12,6 +12,7 @@ const store = new Vuex.Store({
 
     getters: {
         user: state => state.user,
+        userPicture: () => null,
     },
 
     mutations: {
@@ -19,6 +20,24 @@ const store = new Vuex.Store({
             state.user = user
         },
     },
+
+    actions: {
+        login({
+            commit
+        }) {
+            const userData = {
+                profile: {
+                    displayName: 'Mr Cat',
+                },
+            }
+            commit('user', userData)
+        },
+        logout({
+            commit
+        }) {
+            commit('user', null)
+        },
+    }
 })
 
 export default store

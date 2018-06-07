@@ -3,24 +3,17 @@
 @import "./imports";
 @import "./transitions";
 
-.welcome,
-.geo-blog {
-  v-box();
+html,
+body,
+.app {
   height: 100%;
 }
 
-.welcome {
-  box-center();
-}
-
-
 body {
   margin: 0;
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-y: scroll;
-  padding-bottom: 300px;
 }
 
 .material-icons {
@@ -96,11 +89,11 @@ textarea {
   font-family: inherit;
   border: none;
   outline: none;
-  padding: 16px;
-  border-radius: 2px;
+  padding: 8px 12px;
 }
 
 button {
+  border-radius: 3px;
   background: $primary-color;
   color: white;
   cursor: pointer;
@@ -139,6 +132,17 @@ button {
     }
   }
 
+  &.icon-button {
+    width: 39px;
+    padding: 8px;
+    flex: auto 0 0;
+
+    .material-icons {
+      position: relative;
+      top: -2px;
+    }
+  }
+
   &.secondary {
     background: white;
     border-color: rgba($primary-color, .3);
@@ -163,7 +167,7 @@ textarea {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  border: solid 1px $md-grey-200;
+  border-bottom: solid 1px $md-grey-200;
   // border-bottom: solid 2px $md-grey-300;
   text-align: left;
 
@@ -173,7 +177,7 @@ textarea {
 }
 
 textarea {
-  max-width: 100%;
+  resize: none;
 }
 
 .search-input {
@@ -199,14 +203,6 @@ h1 {
   font-weight: lighter;
   font-size: 2.2em;
   text-align: center;
-
-  &::after {
-    display: block;
-    content: '';
-    width: 160px;
-    border-bottom: 2px dashed rgba($primary-color, .3);
-    margin: 16px auto 32px;
-  }
 }
 
 h2 {
@@ -254,9 +250,9 @@ main {
 }
 
 form {
-  padding: 64px 32px;
-  background: rgba($primary-color, .05);
+  padding: 12px;
   position: relative;
+  box-sizing: border-box;
 
   > section {
     margin: auto;
@@ -267,15 +263,6 @@ form {
   .error {
     &:not(:last-child) {
       margin-bottom: 16px;
-    }
-  }
-
-  .actions {
-    h-box();
-
-    > * {
-      flex: 100% 1 1;
-      space-between-x(16px);
     }
   }
 
@@ -294,6 +281,15 @@ form {
     color: $md-red;
     padding: 16px 32px;
     border-radius: 3px;
+  }
+}
+
+.actions {
+  h-box();
+
+  > * {
+    flex: 100% 1 1;
+    space-between-x(12px);
   }
 }
 
@@ -322,7 +318,7 @@ form {
   }
 }
 
-.loading {
+.loading-animation {
   $size = 32px;
 
   h-box();
@@ -410,20 +406,60 @@ form {
   }
 }
 
-nav {
-  padding: 16px 32px 0;
+.spacer {
+  flex: 100% 1 1;
+}
+
+.app-menu {
+  padding: 16px 32px;
   h-box();
+  align-items: center;
+  background: $primary-color;
+  color: white;
+  font-size: 20px;
+
+  @media (max-width: $small-screen) {
+    padding: 4px 16px;
+  }
+
+  .user {
+    &, .info {
+      @extend .spacer;
+      h-box();
+      align-items: center;
+    }
+
+    .info {
+      @extend .spacer;
+      justify-content: center;
+
+      @media (max-width: $small-screen) {
+        > * {
+          display: none;
+        }
+      }
+    }
+
+    .picture {
+      margin-right: 20px;
+
+      img {
+        $size = 50px;
+        max-width: $size;
+        max-height: $size;
+        min-width: $size;
+        border-radius: 50%;
+      }
+    }
+  }
 
   a {
     text-decoration: none;
     border-bottom: solid 2px transparent;
     display: inline-block;
     padding: 12px 16px 10px;
+    color: white;
   }
-}
-
-.spacer {
-  flex: 100% 1 1;
 }
 
 .error {
@@ -497,54 +533,197 @@ nav {
   }
 }
 
-.tickets-layout {
-  .actions {
-    margin-bottom: 32px;
+.welcome,
+.geo-blog {
+  v-box();
+  height: 100%;
+}
+
+.welcome {
+  box-center();
+}
+
+.geo-blog {
+  .panes {
+    h-box();
+    flex: auto 1 1;
+  }
+
+  .blog-map {
+    @extend .spacer;
+    position: relative;
+    flex: 70% 1 1;
+
+    .vue-google-map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .blog-content {
+    background: white;
+    flex: 30% 1 1;
+    max-width: 500px;
+    min-width: 300px;
+    v-box();
+
+    > :last-child {
+      flex: 1;
+    }
+
+    @media (max-width: $small-screen) {
+      &:not(.has-content) {
+        display: none;
+      }
+
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: none;
+      flex: none;
+      z-index: 1;
+    }
+  }
+
+  .location-info {
+    .details {
+      font-size: 12px;
+      padding: 12px;
+      background: darken(white, 3%);
+
+      .name {
+        color: black;
+      }
+
+      .address {
+        color: lighten(black, 50%);
+      }
+    }
+  }
+
+  .no-content {
+    v-box();
+    box-center();
+
+    .material-icons {
+      font-size: 64px;
+      margin-bottom: 12px;
+      color: $md-grey-300;
+    }
+
+    .hint {
+      padding: 12px;
+    }
+  }
+
+  .create-post,
+  .post-content {
+    v-box();
+
+    > * {
+      space-between-y(12px);
+    }
+  }
+
+  .create-post textarea,
+  .post-content .comments {
+    flex: 100% 1 1;
+  }
+
+  .post-content {
+    padding: 12px;
+
+    .title {
+      h-box();
+      align-items: center;
+      font-size: 20px;
+
+      img {
+        border-radius: 50%;
+        max-width: 50px;
+        max-height: 50px;
+        margin-right: 12px;
+      }
+
+      > span {
+        flex: auto 1 1;
+
+        > span {
+          display: block;
+        }
+
+        .info {
+          font-size: 12px;
+          color: $md-grey-600;
+
+          .name {
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+
+    .content {
+      white-space: pre-wrap;
+    }
+
+    .toolbar {
+      h-box();
+      box-center();
+
+      > * {
+        space-between-x(12px);
+      }
+    }
+
+    .likes {
+      &.liked {
+        background: $md-green;
+        border-color: $md-green-600;
+        color: white;
+      }
+    }
+
+    .comments-count {
+      padding: 8px 12px;
+      color: $primary-color;
+    }
+
+    .comments {
+      overflow-y: auto;
+
+      .comment {
+        h-box();
+        padding: 12px 0;
+
+        .avatar {
+          border-radius: 50%;
+          max-width: 32px;
+          max-height: 32px;
+          margin-top: 3px;
+          margin-right: 12px;
+        }
+
+        .info {
+          font-size: 12px;
+          color: $md-grey-600;
+
+          .name {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
   }
 }
 
-.tickets-list {
-  .ticket-item {
-    padding: 16px;
-
-    &:not(:last-child) {
-      border-bottom: dashed 2px rgba($primary-color, .3);
-    }
-
-    &:hover {
-      background: rgba($primary-color, .05);
-    }
-
-    .date {
-      float: right;
-      color: $md-grey-400;
-    }
-  }
-}
-
-.ticket {
-  section.infos {
-    margin-bottom: 32px;
-
-    .info {
-      color: $md-grey-400;
-
-      &:not(:last-child) {
-        margin-bottom: 16px;
-      }
-
-      strong {
-        color: $md-grey-600;
-        font-weight: normal;
-      }
-    }
-  }
-
-  section.content {
-    padding: 16px 32px;
-    border-left: solid 2px rgba($primary-color, .3);
-    background: rgba($primary-color, .05);
-  }
+.hint {
+  color: $md-grey-600;
 }
 
 // Mobile

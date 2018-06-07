@@ -1,26 +1,19 @@
 import Vue from 'vue'
+import VueFetch from './plugins/fetch'
 import AppLayout from './components/AppLayout.vue'
 import router from './router'
-import './global-components'
-import VueFetch from './plugins/fetch'
-
-import store from './store'
-// import state from './state'
-// import VueState from './plugins/state'
-
 import * as filters from './filters'
+import store from './store'
+
 for (const key in filters) {
     Vue.filter(key, filters[key])
 }
 
 Vue.use(VueFetch, {
-    baseUrl: 'http://localhost/',
+    baseUrl: 'http://localhost:8089/',
 })
-// Vue.use(VueState, state)
-Vue.config.productionTip = false
 
 new Vue({
-    // data: state,
     ...AppLayout,
     router,
     store

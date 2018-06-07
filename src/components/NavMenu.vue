@@ -1,41 +1,41 @@
 <template>
-    <nav class="menu">
-        <router-link :to="{ name: 'home' }" exact>Home</router-link>
-        <router-link :to="{ name: 'faq' }">FAQ</router-link>
-        <router-link :to="{ name: 'tickets' }"> Support tickets</router-link>
-
-        <div class="spacer"></div>
-        <template v-if="$store.getters.user">
-            <a>{{ $store.getters.user.username }}</a>
-            <a @click="logout">Logout</a>
-        </template>
-        <router-link v-else :to="{name: 'login'}">Login</router-link>
-    </nav>
+    <div class="app-menu">
+        <div class="header">
+            <i class="material-icons">place</i>
+            GeoBlog
+        </div>
+        <div class="user">
+            <div class="info" v-if="user">
+                <span class="picture" v-if="userPicture">
+                    <img :src="userPicture" />
+                </span>
+                <span class="username">{{ user.profile.displayName }}
+                </span>
+            </div>
+            <a @click="centerOnUser">
+                <i class="material-icons">my_location</i>
+            </a>
+            <a @click="logout">
+                <i class="material-icons">
+                    power_settings_new</i>
+            </a>
+        </div>
+    </div>
 </template>
 
 <script>
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex'
     export default {
-        methods: {
-            async logout() {
-                const result = await this.$fetch('logout')
-                if (result.status === 'ok') {
-                    this.$store.commit('user', null)
-                    this.$router.replace({
-                        name: 'home'
-                    })
-
-                }
-            },
-        },
+        computed: mapGetters([
+            'user',
+            'userPicture',
+        ]),
+        methods: mapActions({
+            centerOnUser: 'login',
+            logout: 'logout',
+        })
     }
-
 </script>
-
-<style lang="stylus" scoped>
-    @import '../style/imports';
-
-    .router-link-active {
-        border-bottom-color: $primary-color;
-    }
-
-</style>

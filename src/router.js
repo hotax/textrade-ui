@@ -1,14 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import state from './state'
-import store from './store'
 
-import Home from './components/Home.vue'
-import FAQ from './components/FAQ.vue'
-import TicketsLayout from './components/TicketsLayout.vue'
-import Tickets from './components/Tickets.vue'
-import NewTicket from './components/NewTicket.vue'
-import Ticket from './components/Ticket.vue'
+import GeoBlog from './components/GeoBlog.vue'
 import Login from './components/Login.vue'
 import NotFound from './components/NotFound.vue'
 
@@ -17,44 +10,15 @@ Vue.use(VueRouter);
 const routes = [{
 		path: '/',
 		name: 'home',
-		component: Home
-	},
-	{
-		path: '/faq',
-		name: 'faq',
-		component: FAQ
+		component: GeoBlog,
+		meta: {
+			private: true
+		}
 	},
 	{
 		path: '/login',
 		name: 'login',
-		meta: {
-			guest: true
-		},
 		component: Login
-	},
-	{
-		path: '/tickets',
-		meta: {
-			private: true
-		},
-		component: TicketsLayout,
-		children: [{
-				path: '',
-				name: 'tickets',
-				component: Tickets
-			},
-			{
-				path: 'new',
-				name: 'new-ticket',
-				component: NewTicket
-			},
-			{
-				path: ':id',
-				name: 'ticket',
-				component: Ticket,
-				props: true
-			},
-		],
 	},
 	{
 		path: '*',
@@ -79,26 +43,6 @@ const router = new VueRouter({
 			y: 0
 		}
 	},
-});
-
-router.beforeEach((to, from, next) => {
-	const user = store.getters.user
-	if (to.matched.some(r => r.meta.private) && !user) {
-		next({
-			name: 'login',
-			params: {
-				wantedRoute: to.fullPath
-			}
-		});
-		return;
-	}
-	if (to.matched.some(r => r.meta.guest) && user) {
-		next({
-			name: 'home'
-		});
-		return;
-	}
-	next();
 });
 
 export default router;
