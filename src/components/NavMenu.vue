@@ -16,8 +16,7 @@
                 <i class="material-icons">my_location</i>
             </a>
             <a @click="logout">
-                <i class="material-icons">
-                    power_settings_new</i>
+                <i class="material-icons"> power_settings_new</i>
             </a>
         </div>
     </div>

@@ -2,6 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import {
+    $fetch
+} from '../plugins/fetch'
+import router from '../router'
+
+
 const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     state() {
@@ -22,20 +28,37 @@ const store = new Vuex.Store({
     },
 
     actions: {
-        login({
+        async login({
             commit
         }) {
-            const userData = {
-                profile: {
-                    displayName: 'Mr Cat',
-                },
+            try {
+                const user = await $fetch('user')
+                commit('user', user)
+                if (user) {
+                    // Redirect to the wanted route if any or else to home
+                    router.replace(router.currentRoute.params.wantedRoute || {
+                        name: 'home'
+                    })
+                }
+            } catch (e) {
+                // do nothing
             }
-            commit('user', userData)
         },
         logout({
             commit
         }) {
             commit('user', null)
+            $fetch('logout')
+            // If the route is private
+            // We go to the login screen
+            if (router.currentRoute.matched.some(r => r.meta.private)) {
+                router.replace({
+                    name: 'login',
+                    params: {
+                        wantedRoute: router.currentRoute.fullPath,
+                    }
+                })
+            }
         },
     }
 })

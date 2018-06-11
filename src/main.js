@@ -10,7 +10,7 @@ for (const key in filters) {
 }
 
 Vue.use(VueFetch, {
-    baseUrl: 'http://localhost:8089/',
+    baseUrl: 'http://localhost:8089/api/',
 })
 
 new Vue({
