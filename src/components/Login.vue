@@ -2,7 +2,7 @@
     <div class="welcome">
         <h1>Welcome</h1>
         <div class="actions">
-            <button @click="openGoogleSignin">
+            <button @click="openGithubSignin">
                 Sign in with Google
             </button>
         </div>
@@ -15,7 +15,7 @@
     export default {
         methods: {
             ...mapActions(['login', ]),
-            openGoogleSignin() {
+            openGithubSignin() {
                 const url = 'http://localhost:8089/api/auth/github'
                 const name = 'github_login'
                 const

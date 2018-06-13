@@ -5,5 +5,5 @@
 </template>
 
 <style lang="stylus">
-    @import '../style/main'
+    @import '../styles/main'
 </style>

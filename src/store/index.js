@@ -18,7 +18,15 @@ const store = new Vuex.Store({
 
     getters: {
         user: state => state.user,
-        userPicture: () => null,
+        userPicture: (state, getters) => {
+            const user = getters.user
+            if (user) {
+                const photos = user.profile.photos
+                if (photos.length !== 0) {
+                    return photos[0].value
+                }
+            }
+        },
     },
 
     mutations: {
@@ -28,11 +36,16 @@ const store = new Vuex.Store({
     },
 
     actions: {
+        async init({
+            dispatch
+        }) {
+            await dispatch('login')
+        },
         async login({
             commit
         }) {
             try {
-                const user = await $fetch('user')
+                const user = await $fetch('api/user')
                 commit('user', user)
                 if (user) {
                     // Redirect to the wanted route if any or else to home
@@ -48,7 +61,7 @@ const store = new Vuex.Store({
             commit
         }) {
             commit('user', null)
-            $fetch('logout')
+            $fetch('api/logout')
             // If the route is private
             // We go to the login screen
             if (router.currentRoute.matched.some(r => r.meta.private)) {
