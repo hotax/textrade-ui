@@ -18,9 +18,8 @@
             openGithubSignin() {
                 const url = 'http://localhost:8089/api/auth/github'
                 const name = 'github_login'
-                const
-                    specs = 'width=500,height=500'
-                window.open(url, name, specs)
+                // const specs = 'width=500,height=500'
+                window.open(url, name)
             },
             handleMessage({
                 data,
