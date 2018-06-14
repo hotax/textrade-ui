@@ -4,6 +4,10 @@ import AppLayout from './components/AppLayout.vue';
 import router from './router';
 import * as filters from './filters';
 import store from './store';
+import {
+	sync
+} from 'vuex-router-sync'
+sync(store, router)
 
 for (const key in filters) {
 	Vue.filter(key, filters[key]);
